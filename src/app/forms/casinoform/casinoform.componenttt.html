@@ -1,0 +1,81 @@
+<div>
+<div class="jumbotron">
+    <form [formGroup]="newcasinoform" (ngSubmit)="onSubmit()" novalidate>
+
+        <div class="form-group" [ngClass]='{
+                    "has-danger":(bussinessName.dirty || bussinessName.touched) && bussinessName.invalid ,
+                    "has-success":(bussinessName.dirty || bussinessName.touched) && bussinessName.valid 
+                }'>
+            <label>Casino Name</label>
+            <input type="text" class="form-control" formControlName="bussinessName">
+            <div class="form-control-feedback" *ngIf="bussinessName.errors && ( bussinessName.dirty || bussinessName.touched )">
+                <p *ngIf="bussinessName.errors.required">Casino Name is required</p>
+            </div>
+        </div>
+
+        <!-- <div>
+            <label>Client Name</label>
+            <input type="text" class="form-control" disabled>
+        </div> -->
+
+        <div class="form-group" [ngClass]="{
+            'has-danger':addressLine1.invalid && (addressLine1.dirty || addressLine1.touched),
+            'has-success':addressLine1.valid && (addressLine1.dirty || addressLine1.touched)
+            }">
+            <label>Address Line 1</label>
+            <input type="text" class="form-control" formControlName="addressLine1">
+            <div class="form-control-feedback" *ngIf="addressLine1.errors && (addressLine1.dirty || addressLine1.touched)">
+                <p *ngIf="addressLine1.errors.required">Address Line 1 is required</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Address Line 2</label>
+            <input type="text" class="form-control" formControlName="addressLine2">
+        </div>
+
+        <div class="form-group" [ngClass]="{
+            'has-danger':countryId.invalid && (countryId.dirty || countryId.touched),
+            'has-success':countryId.valid && (countryId.dirty || countryId.touched)
+        }">
+            <label>Country</label>
+            <!-- <input type="countryId" class="form-control" formControlName="countryId"> -->
+            <select type="countryId" class="form-control" formControlName="countryId" (change)="onCountrySelect($event.target.value)">
+                <option value="">Please Select your country</option>
+                <option *ngFor="let country of countriesIdList" value="{{country}}">{{countriesList[country]}}</option>
+            </select>
+            <div class="form-control-feedback" *ngIf="countryId.errors && (countryId.dirty || countryId.touched)">
+                <p *ngIf="countryId.errors.required">Country Id is required</p>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{	
+                'has-danger':cityId.invalid && (cityId.dirty || cityId.touched),
+                'has-success':cityId.valid && (cityId.dirty || cityId.touched)
+            }">
+            <label>City </label>
+            <!-- <input type="cityId" class="form-control" formControlName="cityId"> -->
+            <select type="cityId" class="form-control" formControlName="cityId">
+                <option value="">Please select your city</option>
+                <option *ngFor="let cityid of temp_cityIdList" value="{{cityid}}">{{temp_citylist[cityid]}}</option>
+            </select>
+            <div class="form-control-feedback" *ngIf="cityId.errors && (cityId.dirty || cityId.touched)">
+                <p *ngIf="cityId.errors.required">City Id is required</p>
+                <!-- <p *ngIf="email.errors.pattern">Email is incorrect</p> -->
+            </div>
+        </div>
+
+        <!-- <pre>{{ newclientform.value | json }}</pre> -->
+        <!-- <pre>{{ newclientform.valid }}</pre> -->
+
+        <button type="submit" class="btn btn-primary" [disabled]="!newclientform.valid"> Save & Exit </button>
+        <button class="btn btn-primary" [disabled]="!newclientform.valid"> Save & Continue </button>
+        <a class="btn btn-primary" [routerLink]="['/clients/create']" [routerLinkActive]="['router-link-active']" > Step Back 
+        </a>
+    </form>
+</div>
+</div>
+
+<div>
+
+</div>

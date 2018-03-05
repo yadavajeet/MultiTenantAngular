@@ -1,0 +1,465 @@
+<!-- <div class="card-header">
+    <a class="btn btn-info" [routerLink]="['/clients']" [routerLinkActive]="['router-link-active']">
+        Back To Client's List
+    </a>
+</div>
+-->
+<div>
+    <div class="jumbotron">
+        <div class="stepwizard">
+            <div class="stepwizard-row setup-panel">
+                <div class="stepwizard-step col-xs-3">
+                    <a type="button" class="btn btn-default btn-crl">1</a>
+                    <p>
+                        <small>Step 1</small>
+                    </p>
+                    <div id="step1" class="square">
+
+                    </div>
+                </div>
+                <div class="stepwizard-step col-xs-3">
+                    <a type="button" class="btn btn-default btn-crl">2</a>
+                    <p>
+                        <small>Step 2</small>
+                    </p>
+                    <div id="step2" class="square">
+
+                    </div>
+                </div>
+                <div class="stepwizard-step col-xs-3">
+                    <a type="button" class="btn btn-default btn-crl">3</a>
+                    <p>
+                        <small>Step 3</small>
+                    </p>
+                    <div id="step3" class="square">
+
+                    </div>
+                </div>
+                <div class="stepwizard-step col-xs-3">
+                    <a type="button" class="btn btn-default btn-crl">4</a>
+                    <p>
+                        <small>Step 4</small>
+                    </p>
+                    <div id="step3" class="square">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row" id="stepwiseform">
+            <div class="col-md-3 box-step"></div>
+            <div class="col-md-3 box-step"></div>
+            <div class="col-md-3 box-step"></div>
+            <div class="col-md-3 box-step"></div>
+        </div> -->
+
+        <div *ngIf="clientForm" class="panel panel-primary setup-content">
+            <div>
+                <form [formGroup]="newclientform" (ngSubmit)="onClientSubmit('submit')" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]='{
+                                "has-danger":(bussinessName.dirty || bussinessName.touched) && bussinessName.invalid ,
+                                "has-success":(bussinessName.dirty || bussinessName.touched) && bussinessName.valid 
+                            }'>
+                                <label>Client Name</label>
+                                <input type="text" class="form-control" formControlName="bussinessName" [ngClass]='{
+                                        "is-valid":(bussinessName.dirty || bussinessName.touched) && bussinessName.valid,
+                                        "is-invalid":(bussinessName.dirty || bussinessName.touched) && bussinessName.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="bussinessName.errors && ( bussinessName.dirty || bussinessName.touched )">
+                                    <p *ngIf="bussinessName.errors.required">Client Name is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':taxationId.invalid && (taxationId.dirty || taxationId.touched),
+                                'has-success':taxationId.valid && (taxationId.dirty || taxationId.touched)
+                            }">
+                                <label>Taxation Id</label>
+                                <input type="text" class="form-control" formControlName="taxationId" [ngClass]='{
+                                        "is-valid":(taxationId.dirty || taxationId.touched) && taxationId.valid,
+                                        "is-invalid":(taxationId.dirty || taxationId.touched) && taxationId.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="taxationId.errors && (taxationId.dirty || taxationId.touched)">
+                                    <p *ngIf="taxationId.errors.required">Taxation Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':addressLine1.invalid && (addressLine1.dirty || addressLine1.touched),
+                                'has-success':addressLine1.valid && (addressLine1.dirty || addressLine1.touched)
+                            }">
+                                <label>Address Line 1</label>
+                                <input type="text" class="form-control" formControlName="addressLine1" [ngClass]='{
+                                        "is-valid":(addressLine1.dirty || addressLine1.touched) && addressLine1.valid,
+                                        "is-invalid":(addressLine1.dirty || addressLine1.touched) && addressLine1.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="addressLine1.errors && (addressLine1.dirty || addressLine1.touched)">
+                                    <p *ngIf="addressLine1.errors.required">Address Line 1 is required</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" class="form-control" formControlName="addressLine2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':countryId.invalid && (countryId.dirty || countryId.touched),
+                                'has-success':countryId.valid && (countryId.dirty || countryId.touched)
+                            }">
+                                <label>Country</label>
+                                <select type="countryId" class="form-control" formControlName="countryId" (change)="onCountrySelect($event.target.value)">
+                                    <option value="">Please Select your country</option>
+                                    <option *ngFor="let country of countriesIdList" value="{{country}}">{{countriesList[country]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="countryId.errors && (countryId.dirty || countryId.touched)">
+                                    <p *ngIf="countryId.errors.required">Country Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{	
+                                'has-danger':cityId.invalid && (cityId.dirty || cityId.touched),
+                                'has-success':cityId.valid && (cityId.dirty || cityId.touched)
+                            }">
+                                <label>City </label>
+                                <select type="cityId" class="form-control" formControlName="cityId">
+                                    <option value="">Please select your city</option>
+                                    <option *ngFor="let cityid of temp_cityIdList" value="{{cityid}}">{{temp_citylist[cityid]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="cityId.errors && (cityId.dirty || cityId.touched)">
+                                    <p *ngIf="cityId.errors.required">City Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-left">
+                                <div class="col-md-auto">
+                                    <a class="btn btn-primary" [routerLink]="['/clients']" [routerLinkActive]="['router-link-active']"> Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <button type="submit" class="btn btn-primary" [disabled]="!newclientform.valid"> Save & Exit </button>
+                                </div>
+                                <div class="col-md-auto">
+                                    <button type="button" class="btn btn-primary" [disabled]="!newclientform.valid" (click)="saveClientLocally()"> Save & Continue </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div *ngIf="casinoForm" class="panel panel-primary setup-content">
+            <div>
+                <form [formGroup]="newcasinoform" (ngSubmit)="onCasinoSubmit()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" [ngClass]='{
+                            "has-danger":(casinoName.dirty || casinoName.touched) && casinoName.invalid ,
+                            "has-success":(casinoName.dirty || casinoName.touched) && casinoName.valid 
+                        }'>
+                                <label>Casino Name</label>
+                                <input type="text" class="form-control" formControlName="casinoName" [ngClass]='{
+                                        "is-valid":(casinoName.dirty || casinoName.touched) && casinoName.valid,
+                                        "is-invalid":(casinoName.dirty || casinoName.touched) && casinoName.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="casinoName.errors && ( casinoName.dirty || casinoName.touched )">
+                                    <p *ngIf="casinoName.errors.required">Casino Name is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="form-group" [ngClass]='{
+                        "has-danger":(clientName.dirty || clientName.touched) && clientName.invalid ,
+                        "has-success":(clientName.dirty || clientName.touched) && clientName.valid 
+                    }'>
+                        <label>Client Name</label>
+                        <input type="text" class="form-control" formControlName="clientName">
+                        <div class="form-control-feedback" *ngIf="clientName.errors && ( clientName.dirty || clientName.touched )">
+                            <p *ngIf="clientName.errors.required">Casino Name is required</p>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':casinoAddressLine1.invalid && (casinoAddressLine1.dirty || casinoAddressLine1.touched),
+                                'has-success':casinoAddressLine1.valid && (casinoAddressLine1.dirty || casinoAddressLine1.touched)
+                            }">
+                                <label>Address Line 1</label>
+                                <input type="text" class="form-control" formControlName="casinoAddressLine1" [ngClass]='{
+                                        "is-valid":(casinoAddressLine1.dirty || casinoAddressLine1.touched) && casinoAddressLine1.valid,
+                                        "is-invalid":(casinoAddressLine1.dirty || casinoAddressLine1.touched) && casinoAddressLine1.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="casinoAddressLine1.errors && (casinoAddressLine1.dirty || casinoAddressLine1.touched)">
+                                    <p *ngIf="casinoAddressLine1.errors.required">Address Line 1 is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" class="form-control" formControlName="casinoAddressLine2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':casinoCountryId.invalid && (casinoCountryId.dirty || casinoCountryId.touched),
+                                'has-success':casinoCountryId.valid && (casinoCountryId.dirty || casinoCountryId.touched)
+                            }">
+                                <label>Country</label>
+                                <select type="casinoCountryId" class="form-control" formControlName="casinoCountryId" (change)="onCountrySelect($event.target.value)">
+                                    <option value="">Please Select your country</option>
+                                    <option *ngFor="let country of countriesIdList" value="{{country}}">{{countriesList[country]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="casinoCountryId.errors && (casinoCountryId.dirty || casinoCountryId.touched)">
+                                    <p *ngIf="casinoCountryId.errors.required">Country Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{    
+                                'has-danger':casinoCityId.invalid && (casinoCityId.dirty || casinoCityId.touched),
+                                'has-success':casinoCityId.valid && (casinoCityId.dirty || casinoCityId.touched)
+                            }">
+                                <label>City </label>
+                                <select type="casinoCityId" class="form-control" formControlName="casinoCityId">
+                                    <option value="">Please select your city</option>
+                                    <option *ngFor="let cityid of temp_cityIdList" value="{{cityid}}">{{temp_citylist[cityid]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="casinoCityId.errors && (casinoCityId.dirty || casinoCityId.touched)">
+                                    <p *ngIf="casinoCityId.errors.required">City Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-left">
+                                <div class="col-md-auto">
+                                    <button type="button" class="btn btn-primary" (click)="onStepBackToClientForm()"> Step Back </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <button type="button" class="btn btn-primary" [disabled]="!newcasinoform.valid"> Save & Exit </button>
+                                </div>
+                                <div class="col-md-auto">
+                                    <button type="button" class="btn btn-primary" [disabled]="!newcasinoform.valid"> Save & Continue </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 multistep_form">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-1" type="button" class="btn btn-success">1</a>
+                            <p>
+                                <small>Step 1</small>
+                            </p>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-2" type="button" class="btn btn-default">2</a>
+                            <p>
+                                <small>Step 2</small>
+                            </p>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-3" type="button" class="btn btn-default">3</a>
+                            <p>
+                                <small>Step 3</small>
+                            </p>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-4" type="button" class="btn btn-default">4</a>
+                            <p>
+                                <small>Step 4</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form role="form" [formGroup]="newclientform" (ngSubmit)="onClientSubmit('submit')" novalidate>
+                    <div class="panel panel-primary setup-content" id="step-1">
+                        <div class="panel-body">
+
+                            <div class="form-group" [ngClass]='{
+                                                        "has-danger":(bussinessName.dirty || bussinessName.touched) && bussinessName.invalid,
+                                                        "has-success":(bussinessName.dirty || bussinessName.touched) && bussinessName.valid 
+                                                        }'>
+                                <label class="control-label">Client Name</label>
+                                <input maxlength="100" type="text" class="form-control" formControlName="bussinessName" placeholder="Enter First Name" />
+                                <p *ngIf="bussinessName.errors.required">Client name is required</p>
+                            </div>
+
+                            <div class="form-group" [ngClass]="{
+                                                      'has-danger':taxationId.invalid && (taxationId.dirty || taxationId.touched),
+                                                      'has-success':taxationId.valid && (taxationId.dirty || taxationId.touched)
+                                                       }">
+                                <label class="control-label">Taxation Id</label>
+                                <input maxlength="100" type="text" class="form-control" formControlName="taxationId" placeholder="Enter Last Name"/>
+                                <p *ngIf="taxationId.errors.required">Taxation Id is required</p>
+                            </div>
+
+                            <div class="form-group form_left" [ngClass]='{
+                                "has-danger":addressLine1.invalid && (addressLine1.dirty || addressLine1.touched),
+                                "has-succes":addressLine1.valid && (addressLine1.dirty || addressLine1.touched)
+                            }'>
+                                <label class="control-label">Address Line 1</label>
+                                <input maxlength="100" type="text" class="form-control" formControlName="addressLine1" placeholder="Enter Last Name" />
+                            </div>
+
+                            <div class="form-group form_right">
+                                <label class="control-label">Address Line 2</label>
+                                <input maxlength="100" type="text" class="form-control" placeholder="Enter Address " />
+                            </div>
+
+
+                            <div class="form-group  form_left" [ngClass]="{
+                                        'has-danger':countryId.invalid && (countryId.dirty || countryId.touched),
+                                        'has-success':countryId.valid && (countryId.dirty || countryId.touched)
+                                    }">
+                                <label>Country</label>
+                                <select class="form-control" type="countryId" class="form-control" formControlName="countryId" (change)="onCountrySelect($event.target.value)">
+                                    <option value="">Please select your country</option>
+                                    <option *ngFor="let country of countriesIdList" value="{{country}}">{{countriesList[country]}}</option>
+                                </select>
+                                <div *ngIf="countryId.errors && (countryId.dirty || countryId.touched)">
+                                    <p *ngIf="countryId.errors.required">Country Id is required</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group  form_right" [ngClass]="{    
+                                'has-danger':cityId.invalid && (cityId.dirty || cityId.touched),
+                                'has-success':cityId.valid && (cityId.dirty || cityId.touched)
+                            }">
+                                <label>City</label>
+                                <select type="cityId" class="form-control" formControlName="cityId">
+                                    <option value="">Please select your city</option>
+                                    <option *ngFor="let cityid of temp_cityIdList" value="{{cityid}}">{{temp_citylist[cityid]}}</option>
+                                </select>
+                                <div *ngIf="cityId.errors && (cityId.dirty || cityId.touched)">
+                                    <p *ngIf="cityId.errors.required">City Id is required</p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary pull-right">Next</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <div class="panel panel-primary setup-content" id="step-2">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="control-label">Casino Name</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Client Name</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address" />
+                            </div>
+                            <div class="form-group form_left">
+                                <label class="control-label">Address Line 1</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address" />
+                            </div>
+                            <div class="form-group form_right">
+                                <label class="control-label">Address Line 2</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address" />
+                            </div>
+                            <div class="form-group form_left">
+                                <label for="sel1">Country</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Please select your country</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <div class="form-group form_right">
+                                <label for="sel1">City</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Please select your city</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <div class="panel panel-primary setup-content" id="step-3">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="control-label">Company Name</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Company Address</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address" />
+                            </div>
+                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <div class="panel panel-primary setup-content" id="step-4">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="control-label">Company Name</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Company Address</label>
+                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address" />
+                            </div>
+                            <button class="btn btn-success pull-right" type="submit">Finish!</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->

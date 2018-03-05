@@ -1,0 +1,117 @@
+<div>
+    <div class="jumbotron">
+        <div *ngIf="casinoForm" class="panel panel-primary setup-content">
+            <div>
+                <form [formGroup]="newcasinoform" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" [ngClass]='{
+                            "has-danger":(casinoName.dirty || casinoName.touched) && casinoName.invalid ,
+                            "has-success":(casinoName.dirty || casinoName.touched) && casinoName.valid 
+                        }'>
+                                <label>Casino Name</label>
+                                <input type="text" class="form-control" formControlName="casinoName" [ngClass]='{
+                                        "is-valid":(casinoName.dirty || casinoName.touched) && casinoName.valid,
+                                        "is-invalid":(casinoName.dirty || casinoName.touched) && casinoName.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="casinoName.errors && ( casinoName.dirty || casinoName.touched )">
+                                    <p *ngIf="casinoName.errors.required">Casino Name is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group" [ngClass]='{
+                        "has-danger":(clientName.dirty || clientName.touched) && clientName.invalid ,
+                        "has-success":(clientName.dirty || clientName.touched) && clientName.valid 
+                    }'>
+                        <label>Client Name</label>
+                        <input type="text" class="form-control" formControlName="clientName">
+                        <div class="form-control-feedback" *ngIf="clientName.errors && ( clientName.dirty || clientName.touched )">
+                            <p *ngIf="clientName.errors.required">Casino Name is required</p>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':casinoAddressLine1.invalid && (casinoAddressLine1.dirty || casinoAddressLine1.touched),
+                                'has-success':casinoAddressLine1.valid && (casinoAddressLine1.dirty || casinoAddressLine1.touched)
+                            }">
+                                <label>Address Line 1</label>
+                                <input type="text" class="form-control" formControlName="casinoAddressLine1" [ngClass]='{
+                                        "is-valid":(casinoAddressLine1.dirty || casinoAddressLine1.touched) && casinoAddressLine1.valid,
+                                        "is-invalid":(casinoAddressLine1.dirty || casinoAddressLine1.touched) && casinoAddressLine1.invalid
+                                    }'>
+                                <div class="form-control-feedback" *ngIf="casinoAddressLine1.errors && (casinoAddressLine1.dirty || casinoAddressLine1.touched)">
+                                    <p *ngIf="casinoAddressLine1.errors.required">Address Line 1 is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" class="form-control" formControlName="casinoAddressLine2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{
+                                'has-danger':casinoCountryId.invalid && (casinoCountryId.dirty || casinoCountryId.touched),
+                                'has-success':casinoCountryId.valid && (casinoCountryId.dirty || casinoCountryId.touched)
+                            }">
+                                <label>Country</label>
+                                <select type="casinoCountryId" class="form-control" formControlName="casinoCountryId" (change)="onCountrySelect($event.target.value)">
+                                    <option value="">Please Select your country</option>
+                                    <option *ngFor="let country of countriesIdList" value="{{country}}">{{countriesList[country]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="casinoCountryId.errors && (casinoCountryId.dirty || casinoCountryId.touched)">
+                                    <p *ngIf="casinoCountryId.errors.required">Country Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{    
+                                'has-danger':casinoCityId.invalid && (casinoCityId.dirty || casinoCityId.touched),
+                                'has-success':casinoCityId.valid && (casinoCityId.dirty || casinoCityId.touched)
+                            }">
+                                <label>City </label>
+                                <select type="casinoCityId" class="form-control" formControlName="casinoCityId">
+                                    <option value="">Please select your city</option>
+                                    <option *ngFor="let cityid of temp_cityIdList" value="{{cityid}}">{{temp_citylist[cityid]}}</option>
+                                </select>
+                                <div class="form-control-feedback" *ngIf="casinoCityId.errors && (casinoCityId.dirty || casinoCityId.touched)">
+                                    <p *ngIf="casinoCityId.errors.required">City Id is required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-left">
+                                <div class="col-md-auto">
+                                    <!-- <button type="button" class="btn btn-primary" (click)="onStepBackToCasinoForm()"> Step Back </button> -->
+                                    <a class="btn btn-primary" [routerLink]="['/casinos']" [routerLinkActive]="['router-link-active']"> Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <button type="submit" class="btn btn-primary" [disabled]="!newcasinoform.valid"> Save & Exit </button>
+                                </div>
+                                <!-- <div class="col-md-auto">
+                                    <button type="button" class="btn btn-primary" [disabled]="!newcasinoform.valid"> Save & Continue </button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

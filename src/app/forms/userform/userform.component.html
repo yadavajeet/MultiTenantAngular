@@ -1,0 +1,107 @@
+<!-- <div class="card-header">
+    <a class="btn btn-info" [routerLink]="['/users']" [routerLinkActive]="['router-link-active']">
+        Back To User's List
+    </a>
+</div> -->
+<div class="jumbotron" *ngIf="!successMessage">
+    <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" formControlName="firstname" [ngClass]='{
+                        "is-invalid":(firstname.dirty || firstname.touched) && firstname.invalid ,
+                        "is-valid":(firstname.dirty || firstname.touched) && firstname.valid 
+                    }'>
+            <div class="form-control-feedback" *ngIf="firstname.errors && ( firstname.dirty || firstname.touched )" [ngClass]="{
+                'has-danger':firstname.invalid && (firstname.dirty || firstname.touched),
+                'has-success':firstname.valid && (firstname.dirty || firstname.touched)
+            }">
+                <p *ngIf="firstname.errors.required">First Name is required</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" formControlName="lastname" [ngClass]="{
+                        'is-invalid':lastname.invalid && (lastname.dirty || lastname.touched),
+                        'is-valid':lastname.valid && (lastname.dirty || lastname.touched)
+                    }">
+            <div class="form-control-feedback" *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" [ngClass]="{
+                'has-danger':lastname.invalid && (lastname.dirty || lastname.touched),
+                'has-success':lastname.valid && (lastname.dirty || lastname.touched)
+            }">
+                <p *ngIf="lastname.errors.required">Last Name is required</p>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" formControlName="username"
+                [ngClass]="{
+                    'is-invalid':username.invalid && (username.dirty || username.touched),
+                    'is-valid':username.valid && (username.dirty || username.touched)
+                }"
+            >
+            <div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
+                <p *ngIf="password.errors.required">Username is required</p>
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="email" [ngClass]="{    
+                    'is-invalid':email.invalid && (email.dirty || email.touched),
+                    'is-valid':email.valid && (email.dirty || email.touched)
+                }">
+            <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)" [ngClass]="{
+                    'has-danger':email.invalid && (email.dirty || email.touched),
+                    'has-valid':email.valid && (email.dirty || email.touched)
+                }">
+                <p *ngIf="email.errors.required">Email is required</p>
+                <p *ngIf="email.errors.pattern">Email is incorrect</p>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" formControlName="password" [ngClass]="{
+                    'is-invalid':password.invalid && (password.dirty || password.touched),
+                    'is-valid':password.valid && (password.dirty || password.touched)
+                }">
+            <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)" [ngClass]="{
+                'has-danger':password.invalid && (password.dirty || password.touched),
+                'has-success':password.valid && (password.dirty || password.touched)
+            }">
+                <p *ngIf="password.errors.required">Password is required</p>
+                <p *ngIf="password.errors.minlength">Password must be 8 characters long : Remaining Characters {{ password.errors.minlength.requiredLength - password.errors.minlength.actualLength
+                    }}
+                </p>
+            </div>
+        </div> -->
+
+        <!--  <div class="form-group">
+            <label>User Group ID:</label>
+            <input type="text" class="form-control" formControlName="usergroup_id"
+                [ngClass]="{
+                    'is-invalid':usergroup_id.invalid && (usergroup_id.dirty || usergroup_id.touched),
+                    'is-valid':usergroup_id.valid && (usergroup_id.dirty || usergroup_id.touched)
+                }"
+            >
+            <div class="form-control-feedback" *ngIf="usergroup_id.errors && (usergroup_id.dirty || usergroup_id.touched)">
+                <p *ngIf="usergroup_id.errors.required">User Group Id is required</p>
+            </div>
+        </div> -->
+
+        <!-- <pre>{{ myform.value | json }}</pre> -->
+        <!-- <pre>{{ myform.valid }}</pre> -->
+
+        <button type="submit" class="btn btn-primary" [disabled]="!myform.valid"> Submit Form </button>
+
+    </form>
+</div>
+
+<div *ngIf="successMessage">
+    User Addess Successfully.
+    <a [routerLink]="['/login']">
+        click here to login.
+    </a>
+</div>

@@ -1,0 +1,11 @@
+.flash-msg {
+    position: absolute;
+    z-index: 9999;
+}
+
+.f-msg {
+	margin-top: 2% !important;
+    cursor: inherit;
+    float: right !important;
+    margin-right: -140% !important;
+}
